@@ -182,6 +182,16 @@
     .ff-chev { color: #9494a4; transition: transform 0.15s; flex-shrink: 0; }
     .ff-feed.ff-open .ff-chev { transform: rotate(180deg); }
 
+    /* ── drag handle ── */
+    .ff-drag {
+      cursor: grab; color: #c0c0cc; flex-shrink: 0; display: flex;
+      align-items: center; padding: 2px; transition: color 0.12s;
+    }
+    .ff-drag:hover { color: #5a5a6b; }
+    .ff-drag:active { cursor: grabbing; }
+    .ff-feed.ff-dragging { opacity: 0.4; }
+    .ff-feed.ff-drag-over { border-top: 2px solid #4f46e5; }
+
     /* ── expanded body ── */
     .ff-fbody { border-top: 2px solid #e0e0ea; padding: 4px 12px 12px; background: #f7f7fb; }
     .ff-tools { display: flex; gap: 5px; padding: 10px 0; flex-wrap: wrap; }
@@ -294,6 +304,7 @@
     trash:  `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>`,
     chev:   `<svg class="ff-chev" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>`,
     userplus: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>`,
+    grip:   `<svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><circle cx="5" cy="3" r="1.5"/><circle cx="11" cy="3" r="1.5"/><circle cx="5" cy="8" r="1.5"/><circle cx="11" cy="8" r="1.5"/><circle cx="5" cy="13" r="1.5"/><circle cx="11" cy="13" r="1.5"/></svg>`,
   };
 
   // ── storage ───────────────────────────────────────────────────────────────
@@ -343,6 +354,7 @@
     return `
     <div class="ff-feed${isOpen?" ff-open":""}" data-feed="${f.id}">
       <div class="ff-frow" data-act="toggle">
+        <span class="ff-drag" data-act="drag">${IC.grip}</span>
         <span class="ff-fdot" style="background:${f.color}"></span>
         <span class="ff-fname">${esc(f.name)}</span><span class="ff-fsp"></span>
         ${stackHtml(f.members)}<span class="ff-badge">${f.members.length}</span>${IC.chev}
@@ -514,6 +526,7 @@
 
   // ── event delegation ──────────────────────────────────────────────────────
   shadow.addEventListener("click", async e => {
+    if (justDragged) { justDragged = false; return; }
     const el = e.target.closest("[data-act]"); if (!el) return;
     const act = el.dataset.act;
 
@@ -537,7 +550,8 @@
     const card=e.target.closest(".ff-feed");
     const f=FEEDS.find(x=>x.id===card?.dataset.feed); if (!f) return;
 
-    if      (act==="toggle") { openId=openId===f.id?null:f.id; render(); }
+    if      (act==="drag")   { return; }
+    else if (act==="toggle") { openId=openId===f.id?null:f.id; render(); }
     else if (act==="search-people") { openSearch(f.id); }
     else if (act==="open")   { openFeed(f,0); }
     else if (act==="chunk")  { openFeed(f,Number(el.dataset.i)); }
@@ -551,6 +565,58 @@
   $("ff-so-input").addEventListener("input", onSearchInput);
   $("ff-btn-new").addEventListener("click", ()=>newFeed(f=>{openId=f.id;render();}));
   $("ff-btn-empty").addEventListener("click", ()=>newFeed(f=>{openId=f.id;render();}));
+
+  // ── drag-to-reorder ──────────────────────────────────────────────────────
+  let dragFeedId = null, startClientY = 0, dragThreshold = 5, justDragged = false;
+
+  shadow.addEventListener("pointerdown", e => {
+    const handle = e.target.closest(".ff-drag");
+    if (!handle) return;
+    e.preventDefault();
+    const card = handle.closest(".ff-feed");
+    if (!card) return;
+    dragFeedId = card.dataset.feed;
+    startClientY = e.clientY;
+  });
+
+  document.addEventListener("pointermove", e => {
+    if (!dragFeedId) return;
+    if (Math.abs(e.clientY - startClientY) < dragThreshold) return;
+    const card = shadow.querySelector(`[data-feed="${dragFeedId}"]`);
+    if (!card) return;
+    if (!card.classList.contains("ff-dragging")) {
+      if (openId === dragFeedId) { openId = null; }
+      card.classList.add("ff-dragging");
+    }
+    shadow.querySelectorAll(".ff-feed.ff-drag-over").forEach(el => el.classList.remove("ff-drag-over"));
+    const overEl = shadow.elementFromPoint(e.clientX, e.clientY);
+    const overCard = overEl?.closest(".ff-feed");
+    if (overCard && overCard.dataset.feed !== dragFeedId) {
+      overCard.classList.add("ff-drag-over");
+    }
+  });
+
+  document.addEventListener("pointerup", async e => {
+    if (!dragFeedId) return;
+    const overEl = shadow.elementFromPoint(e.clientX, e.clientY);
+    const overCard = overEl?.closest(".ff-feed");
+    if (overCard) {
+      const targetId = overCard.dataset.feed;
+      if (targetId && targetId !== dragFeedId) {
+        const fromIdx = FEEDS.findIndex(f => f.id === dragFeedId);
+        const toIdx = FEEDS.findIndex(f => f.id === targetId);
+        if (fromIdx !== -1 && toIdx !== -1) {
+          const [moved] = FEEDS.splice(fromIdx, 1);
+          FEEDS.splice(toIdx, 0, moved);
+          await setFeeds(FEEDS);
+        }
+      }
+    }
+    justDragged = true;
+    dragFeedId = null;
+    render();
+  });
+
   $("ff-max-btn").addEventListener("click", async()=>{
     const v=prompt("Max per URL (28 recommended):",String(MAX)); if(!v) return;
     MAX=Math.max(1,Math.min(28,parseInt(v)||MAX));
