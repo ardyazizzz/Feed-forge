@@ -227,7 +227,7 @@
       border-radius: 7px; cursor: pointer; font-size: 13px; font-weight: 650; color: #5a5a6b;
     }
     .ff-chunk:hover { border-color: #4f46e5; color: #4f46e5; }
-    .ff-mlist { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; }
+    .ff-mlist { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; max-height: 340px; overflow-y: auto; }
     .ff-mrow { display: flex; align-items: center; gap: 9px; padding: 7px 4px; border-radius: 8px; }
     .ff-mrow:hover { background: #f4f4f9; }
     .ff-mrow .ff-av { width: 28px; height: 28px; font-size: 10.5px; }
