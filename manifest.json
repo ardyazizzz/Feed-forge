@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "FeedForge",
+  "version": "0.10.0",
+  "description": "Floating LinkedIn feed manager — minimizable drawer, no login required.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Toggle FeedForge"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["sidebar.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
