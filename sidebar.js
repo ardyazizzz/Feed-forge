@@ -23,8 +23,8 @@
     :host { all: initial; display: block; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif !important; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     input, button, select, textarea { font-family: inherit !important; }
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 8px; border: 2px solid #f7f7fb; }
+    ::-webkit-scrollbar { width: 9px; }
+    ::-webkit-scrollbar-thumb { background: #ddd; border-radius: 9px; border: 2px solid #f7f7fb; }
 
     /* ── root panel ── */
     #ff-panel {
@@ -39,12 +39,12 @@
 
     /* ── collapse tab — minimal floating pill ── */
     #ff-tab {
-      position: absolute; left: -28px; top: 50%; transform: translateY(-50%);
-      width: 28px; height: 52px;
+      position: absolute; left: -30px; top: 50%; transform: translateY(-50%);
+      width: 30px; height: 56px;
       background: #fff;
       border: 1px solid #e0e0ea;
       border-right: none;
-      border-radius: 10px 0 0 10px;
+      border-radius: 11px 0 0 11px;
       display: flex; align-items: center; justify-content: center;
       cursor: pointer;
       box-shadow: -3px 0 10px rgba(20,20,43,0.10);
@@ -57,7 +57,7 @@
     .ff-tab-logo { display: none; }
     .ff-tab-label { display: none; }
     .ff-tab-arrow {
-      color: #5a5a6b; font-size: 12px; line-height: 1;
+      color: #5a5a6b; font-size: 14px; line-height: 1;
       transition: transform 0.22s;
     }
     #ff-panel.ff-min .ff-tab-arrow { transform: rotate(180deg); }
@@ -76,54 +76,54 @@
     }
     @keyframes ff-slide-up { from { opacity: 0; transform: translateY(8px); } }
     .ff-so-head {
-      display: flex; align-items: center; gap: 10px; padding: 14px 14px 12px;
+      display: flex; align-items: center; gap: 11px; padding: 15px 15px 13px;
       background: #fff; border-bottom: 1px solid #ececf3; flex-shrink: 0;
     }
     .ff-so-back {
       border: none; background: #f4f4f9; color: #16161d; cursor: pointer;
-      width: 34px; height: 34px; border-radius: 9px; font-size: 18px; line-height: 1;
+      width: 37px; height: 37px; border-radius: 10px; font-size: 20px; line-height: 1;
       display: flex; align-items: center; justify-content: center;
     }
     .ff-so-back:hover { background: #ececf3; }
-    .ff-so-title { font-weight: 700; font-size: 15.5px; }
+    .ff-so-title { font-weight: 700; font-size: 17px; }
     .ff-so-searchbar {
-      display: flex; align-items: center; gap: 9px; margin: 12px 14px;
-      background: #fff; border: 1px solid #ececf3; border-radius: 10px; padding: 0 13px;
+      display: flex; align-items: center; gap: 10px; margin: 14px 16px;
+      background: #fff; border: 1px solid #ececf3; border-radius: 11px; padding: 0 15px;
       flex-shrink: 0;
     }
-    .ff-so-searchbar svg { width: 17px; height: 17px; color: #9494a4; flex-shrink: 0; }
+    .ff-so-searchbar svg { width: 18px; height: 18px; color: #9494a4; flex-shrink: 0; }
     #ff-so-input {
       flex: 1; border: none; background: transparent; outline: none;
-      padding: 11px 0; font-size: 15px; font-family: inherit; color: #16161d; min-width: 0;
+      padding: 12px 0; font-size: 16px; font-family: inherit; color: #16161d; min-width: 0;
     }
-    #ff-so-results { flex: 1; overflow-y: auto; padding: 0 10px 12px; }
-    .ff-sr-msg { padding: 16px 14px; font-size: 14px; color: #9494a4; text-align: center; }
+    #ff-so-results { flex: 1; overflow-y: auto; padding: 0 11px 13px; }
+    .ff-sr-msg { padding: 17px 15px; font-size: 15px; color: #9494a4; text-align: center; }
     .ff-sr-item {
-      display: flex; align-items: center; gap: 12px; padding: 11px 10px;
-      border-radius: 10px; cursor: pointer;
+      display: flex; align-items: center; gap: 13px; padding: 12px 11px;
+      border-radius: 11px; cursor: pointer;
     }
     .ff-sr-item:hover { background: #fff; }
     .ff-sr-av {
-      width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
-      color: #fff; font-size: 14px; font-weight: 700;
+      width: 45px; height: 45px; border-radius: 50%; flex-shrink: 0;
+      color: #fff; font-size: 15px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
       background-size: cover; background-position: center;
     }
     .ff-sr-info { flex: 1; min-width: 0; }
-    .ff-sr-name { font-size: 15px; font-weight: 600; color: #16161d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ff-sr-deg { font-size: 11px; font-weight: 600; color: #4f46e5; background: rgba(79,70,229,.1); padding: 2px 6px; border-radius: 4px; margin-left: 5px; }
-    .ff-sr-head { font-size: 12.5px; color: #5a5a6b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+    .ff-sr-name { font-size: 16px; font-weight: 600; color: #16161d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ff-sr-deg { font-size: 12px; font-weight: 600; color: #4f46e5; background: rgba(79,70,229,.1); padding: 2px 6px; border-radius: 5px; margin-left: 6px; }
+    .ff-sr-head { font-size: 13px; color: #5a5a6b; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
     .ff-sr-add {
       border: none; background: #4f46e5; color: #fff; cursor: pointer;
-      width: 34px; height: 34px; border-radius: 9px; font-size: 20px; line-height: 1;
+      width: 37px; height: 37px; border-radius: 10px; font-size: 22px; line-height: 1;
       flex-shrink: 0; display: flex; align-items: center; justify-content: center;
     }
     .ff-sr-add:hover { filter: brightness(1.1); }
     .ff-sr-add.ff-done { background: #10b981; cursor: default; }
     .ff-spin {
-      display: inline-block; width: 16px; height: 16px; border: 2px solid #e0e0ea;
+      display: inline-block; width: 17px; height: 17px; border: 2px solid #e0e0ea;
       border-top-color: #4f46e5; border-radius: 50%; animation: ff-spin 0.7s linear infinite;
-      vertical-align: middle; margin-right: 7px;
+      vertical-align: middle; margin-right: 8px;
     }
     @keyframes ff-spin { to { transform: rotate(360deg); } }
     .ff-tool.ff-t-add { background: rgba(79,70,229,.1); color: #4f46e5; border-color: transparent; font-weight: 650; }
@@ -131,53 +131,53 @@
 
     /* ── top bar ── */
     .ff-bar {
-      display: flex; align-items: center; gap: 9px; padding: 12px 13px;
+      display: flex; align-items: center; gap: 10px; padding: 13px 14px;
       background: #fff; border-bottom: 1px solid #ececf3; flex-shrink: 0;
     }
-    .ff-brand { font-weight: 800; font-size: 15.5px; white-space: nowrap; color: #16161d; }
+    .ff-brand { font-weight: 800; font-size: 17px; white-space: nowrap; color: #16161d; }
     .ff-search-wrap { position: relative; flex: 1; }
-    .ff-search-ic { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #9494a4; width: 16px; height: 16px; }
+    .ff-search-ic { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); color: #9494a4; width: 17px; height: 17px; }
     #ff-q {
       width: 100%; border: 1px solid #ececf3; background: #f7f7fb;
-      border-radius: 9px; padding: 9px 11px 9px 33px; font-size: 14px;
+      border-radius: 10px; padding: 10px 12px 10px 36px; font-size: 15px;
       font-family: inherit; color: #16161d; outline: none;
     }
     #ff-q:focus { border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79,70,229,.09); }
     #ff-btn-new {
-      background: #4f46e5; color: #fff; border: none; border-radius: 9px;
-      padding: 9px 13px; font-size: 14px; font-weight: 650; cursor: pointer;
+      background: #4f46e5; color: #fff; border: none; border-radius: 10px;
+      padding: 10px 14px; font-size: 15px; font-weight: 650; cursor: pointer;
       font-family: inherit; white-space: nowrap;
     }
     #ff-btn-new:hover { filter: brightness(1.08); }
 
     /* ── feed list ── */
-    #ff-list { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+    #ff-list { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 7px; }
     .ff-feed {
-      background: #fff; border: 1px solid #ececf3; border-radius: 12px; overflow: hidden;
+      background: #fff; border: 1px solid #ececf3; border-radius: 13px; overflow: hidden;
       transition: box-shadow 0.13s;
     }
     .ff-feed:hover { box-shadow: 0 3px 12px rgba(20,20,43,.07); }
     .ff-feed.ff-open { border-color: rgba(79,70,229,.25); box-shadow: 0 5px 18px rgba(79,70,229,.1); }
-    .ff-frow { display: flex; align-items: center; gap: 10px; padding: 13px 14px; cursor: pointer; }
-    .ff-fdot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; }
-    .ff-fname { font-weight: 650; font-size: 15px; letter-spacing: -0.1px; }
+    .ff-frow { display: flex; align-items: center; gap: 11px; padding: 14px 15px; cursor: pointer; }
+    .ff-fdot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .ff-fname { font-weight: 650; font-size: 16px; letter-spacing: -0.1px; }
     .ff-fsp { flex: 1; }
     .ff-stack { display: flex; align-items: center; }
     .ff-av {
-      width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff;
-      margin-left: -7px; color: #fff; font-size: 9px; font-weight: 700;
+      width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff;
+      margin-left: -7px; color: #fff; font-size: 10px; font-weight: 700;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
       background-size: cover; background-position: center;
     }
     .ff-av:first-child { margin-left: 0; }
     .ff-more {
-      margin-left: -7px; width: 24px; height: 24px; border-radius: 50%; border: 2px solid #fff;
-      background: #ececf3; color: #5a5a6b; font-size: 9px; font-weight: 700;
+      margin-left: -7px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff;
+      background: #ececf3; color: #5a5a6b; font-size: 10px; font-weight: 700;
       display: flex; align-items: center; justify-content: center;
     }
     .ff-badge {
-      font-size: 12px; font-weight: 650; color: #5a5a6b; background: #f4f4f9;
-      border-radius: 20px; padding: 3px 8px; min-width: 22px; text-align: center;
+      font-size: 13px; font-weight: 650; color: #5a5a6b; background: #f4f4f9;
+      border-radius: 22px; padding: 3px 8px; min-width: 23px; text-align: center;
     }
     .ff-chev { color: #9494a4; transition: transform 0.15s; flex-shrink: 0; }
     .ff-feed.ff-open .ff-chev { transform: rotate(180deg); }
@@ -193,49 +193,49 @@
     .ff-feed.ff-drag-over { border-top: 2px solid #4f46e5; }
 
     /* ── expanded body ── */
-    .ff-fbody { border-top: 2px solid #e0e0ea; padding: 4px 12px 12px; background: #f7f7fb; }
-    .ff-tools { display: flex; gap: 5px; padding: 10px 0; flex-wrap: wrap; }
+    .ff-fbody { border-top: 2px solid #e0e0ea; padding: 4px 13px 13px; background: #f7f7fb; }
+    .ff-tools { display: flex; gap: 6px; padding: 11px 0; flex-wrap: wrap; }
     .ff-tool {
-      display: inline-flex; align-items: center; gap: 5px;
-      border: 1px solid #ececf3; background: #fff; border-radius: 8px;
-      padding: 7px 11px; cursor: pointer; font-family: inherit;
-      font-size: 13px; font-weight: 550; color: #5a5a6b;
+      display: inline-flex; align-items: center; gap: 6px;
+      border: 1px solid #ececf3; background: #fff; border-radius: 9px;
+      padding: 8px 13px; cursor: pointer; font-family: inherit;
+      font-size: 14px; font-weight: 550; color: #5a5a6b;
     }
     .ff-tool:hover { background: #f4f4f9; color: #16161d; }
     .ff-tool.ff-t-open { background: #4f46e5; color: #fff; border-color: #4f46e5; }
     .ff-tool.ff-t-open:hover { filter: brightness(1.07); }
     .ff-tool.ff-t-del:hover { color: #e5484d; border-color: rgba(229,72,77,.35); background: rgba(229,72,77,.05); }
-    .ff-chunks { display: flex; gap: 5px; align-items: center; padding: 0 0 8px; flex-wrap: wrap; }
-    .ff-chunks-lbl { font-size: 12px; color: #9494a4; margin-right: 2px; }
+    .ff-chunks { display: flex; gap: 6px; align-items: center; padding: 0 0 8px; flex-wrap: wrap; }
+    .ff-chunks-lbl { font-size: 13px; color: #9494a4; margin-right: 2px; }
     .ff-chunk {
-      border: 1px solid #ececf3; background: #fff; width: 28px; height: 28px;
-      border-radius: 7px; cursor: pointer; font-size: 13px; font-weight: 650; color: #5a5a6b;
+      border: 1px solid #ececf3; background: #fff; width: 30px; height: 30px;
+      border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 650; color: #5a5a6b;
     }
     .ff-chunk:hover { border-color: #4f46e5; color: #4f46e5; }
-    .ff-mlist { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; max-height: 340px; overflow-y: auto; }
-    .ff-mrow { display: flex; align-items: center; gap: 9px; padding: 7px 4px; border-radius: 8px; }
+    .ff-mlist { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; max-height: 370px; overflow-y: auto; }
+    .ff-mrow { display: flex; align-items: center; gap: 9px; padding: 8px 5px; border-radius: 9px; }
     .ff-mrow:hover { background: #f4f4f9; }
-    .ff-mrow .ff-av { width: 28px; height: 28px; font-size: 10.5px; }
-    .ff-mn { flex: 1; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #16161d; }
+    .ff-mrow .ff-av { width: 30px; height: 30px; font-size: 11px; }
+    .ff-mn { flex: 1; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #16161d; }
     .ff-mn a { color: inherit; text-decoration: none; }
     .ff-mn a:hover { color: #4f46e5; }
-    .ff-rm { border: none; background: transparent; color: #9494a4; cursor: pointer; padding: 4px; border-radius: 6px; opacity: 0; font-size: 15px; line-height: 1; }
+    .ff-rm { border: none; background: transparent; color: #9494a4; cursor: pointer; padding: 5px; border-radius: 7px; opacity: 0; font-size: 16px; line-height: 1; }
     .ff-mrow:hover .ff-rm { opacity: 1; }
     .ff-rm:hover { color: #e5484d; background: rgba(229,72,77,.08); }
 
     /* ── empty ── */
-    #ff-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; gap: 6px; color: #5a5a6b; }
-    #ff-empty p { font-weight: 700; font-size: 16px; color: #16161d; }
-    #ff-empty small { font-size: 13px; max-width: 260px; line-height: 1.5; }
-    .ff-empty-icon { width: 56px; height: 56px; border-radius: 15px; background: rgba(79,70,229,.09); position: relative; margin-bottom: 8px; }
-    .ff-empty-icon::before, .ff-empty-icon::after { content: ""; position: absolute; left: 14px; height: 4.5px; border-radius: 2px; background: #4f46e5; opacity: .5; }
-    .ff-empty-icon::before { top: 18px; width: 28px; }
-    .ff-empty-icon::after { top: 30px; width: 16px; }
-    #ff-btn-empty { background: #4f46e5; color: #fff; border: none; border-radius: 9px; padding: 10px 18px; font-size: 15px; font-weight: 650; cursor: pointer; font-family: inherit; margin-top: 10px; }
+    #ff-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 26px; gap: 7px; color: #5a5a6b; }
+    #ff-empty p { font-weight: 700; font-size: 17px; color: #16161d; }
+    #ff-empty small { font-size: 14px; max-width: 260px; line-height: 1.5; }
+    .ff-empty-icon { width: 60px; height: 60px; border-radius: 16px; background: rgba(79,70,229,.09); position: relative; margin-bottom: 8px; }
+    .ff-empty-icon::before, .ff-empty-icon::after { content: ""; position: absolute; left: 15px; height: 5px; border-radius: 2px; background: #4f46e5; opacity: .5; }
+    .ff-empty-icon::before { top: 20px; width: 30px; }
+    .ff-empty-icon::after { top: 33px; width: 17px; }
+    #ff-btn-empty { background: #4f46e5; color: #fff; border: none; border-radius: 10px; padding: 11px 20px; font-size: 16px; font-weight: 650; cursor: pointer; font-family: inherit; margin-top: 11px; }
 
     /* ── footer ── */
-    .ff-foot { display: flex; align-items: center; gap: 12px; padding: 10px 13px; border-top: 1px solid #ececf3; background: #fff; flex-shrink: 0; }
-    .ff-flink { border: none; background: transparent; color: #9494a4; font-family: inherit; font-size: 12.5px; cursor: pointer; padding: 0; }
+    .ff-foot { display: flex; align-items: center; gap: 13px; padding: 11px 14px; border-top: 1px solid #ececf3; background: #fff; flex-shrink: 0; }
+    .ff-flink { border: none; background: transparent; color: #9494a4; font-family: inherit; font-size: 13px; cursor: pointer; padding: 0; }
     .ff-flink:hover { color: #4f46e5; }
     .ff-flink b { color: #16161d; }
     .ff-fsp { flex: 1; }
@@ -248,7 +248,7 @@
   panel.id = "ff-panel";
   panel.innerHTML = `
     <div id="ff-tab">
-      <span class="ff-tab-arrow"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span>
+      <span class="ff-tab-arrow"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span>
     </div>
     <div id="ff-main">
       <header class="ff-bar">
@@ -298,13 +298,13 @@
     return `<div class="${cls}" style="${bg}">${m.avatar?"":esc(ini(m.name||m.id))}</div>`;
   };
   const IC = {
-    open:   `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>`,
-    pen:    `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>`,
-    color:  `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>`,
-    trash:  `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>`,
-    chev:   `<svg class="ff-chev" viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>`,
-    userplus: `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>`,
-    grip:   `<svg viewBox="0 0 16 16" width="12" height="12" fill="currentColor"><circle cx="5" cy="3" r="1.5"/><circle cx="11" cy="3" r="1.5"/><circle cx="5" cy="8" r="1.5"/><circle cx="11" cy="8" r="1.5"/><circle cx="5" cy="13" r="1.5"/><circle cx="11" cy="13" r="1.5"/></svg>`,
+    open:   `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>`,
+    pen:    `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>`,
+    color:  `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/></svg>`,
+    trash:  `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>`,
+    chev:   `<svg class="ff-chev" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>`,
+    userplus: `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>`,
+    grip:   `<svg viewBox="0 0 16 16" width="13" height="13" fill="currentColor"><circle cx="5" cy="3" r="1.5"/><circle cx="11" cy="3" r="1.5"/><circle cx="5" cy="8" r="1.5"/><circle cx="11" cy="8" r="1.5"/><circle cx="5" cy="13" r="1.5"/><circle cx="11" cy="13" r="1.5"/></svg>`,
   };
 
   // ── storage ───────────────────────────────────────────────────────────────
