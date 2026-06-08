@@ -208,7 +208,7 @@
     .ff-feed.ff-open .ff-chev { transform: rotate(180deg); }
 
     /* ── expanded body ── */
-    .ff-fbody { border-top: 1px solid #f4f4f9; padding: 4px 12px 12px; }
+    .ff-fbody { border-top: 2px solid #e0e0ea; padding: 4px 12px 12px; background: #f7f7fb; }
     .ff-tools { display: flex; gap: 5px; padding: 10px 0; flex-wrap: wrap; }
     .ff-tool {
       display: inline-flex; align-items: center; gap: 5px;
