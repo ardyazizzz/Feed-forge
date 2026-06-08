@@ -7,7 +7,6 @@
   // ── state ─────────────────────────────────────────────────────────────────
   const PALETTE = ["#4F46E5","#0EA5E9","#10B981","#F59E0B","#EF4444","#8B5CF6","#EC4899","#14B8A6"];
   let FEEDS = [], MAX = 28, openId = null, search = "", isOpen = true;
-  let currentVanity = null, currentMember = null;
 
   // ── shadow DOM setup ──────────────────────────────────────────────────────
   const host = document.createElement("div");
@@ -130,30 +129,6 @@
     .ff-tool.ff-t-add { background: rgba(79,70,229,.1); color: #4f46e5; border-color: transparent; font-weight: 650; }
     .ff-tool.ff-t-add:hover { background: rgba(79,70,229,.18); }
 
-    /* ── profile strip ── */
-    #ff-strip { background: #4f46e5; padding: 13px 14px; flex-shrink: 0; }
-    #ff-strip.ff-hidden { display: none; }
-    .ff-strip-inner { display: flex; align-items: center; gap: 11px; }
-    .ff-sav {
-      width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-      border: 2px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.2);
-      color: #fff; font-size: 14px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      background-size: cover; background-position: center;
-    }
-    .ff-sinfo { flex: 1; min-width: 0; }
-    .ff-sname { color: #fff; font-weight: 700; font-size: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .ff-ssub { color: rgba(255,255,255,0.7); font-size: 12.5px; margin-top: 2px; }
-    .ff-sfeeds { display: flex; gap: 5px; flex-wrap: wrap; max-width: 140px; justify-content: flex-end; }
-    .ff-sf {
-      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
-      color: #fff; border-radius: 7px; padding: 5px 10px; font-size: 12.5px; font-weight: 600;
-      cursor: pointer; white-space: nowrap; max-width: 95px; overflow: hidden; text-overflow: ellipsis;
-    }
-    .ff-sf:hover { background: rgba(255,255,255,0.3); }
-    .ff-sf.ff-added { background: rgba(255,255,255,0.9); color: #4f46e5; }
-    .ff-sf-new { background: transparent; border-style: dashed; color: rgba(255,255,255,0.75); }
-
     /* ── top bar ── */
     .ff-bar {
       display: flex; align-items: center; gap: 9px; padding: 12px 13px;
@@ -266,9 +241,6 @@
       <span class="ff-tab-arrow"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></span>
     </div>
     <div id="ff-main">
-      <div id="ff-strip" class="ff-hidden">
-        <div class="ff-strip-inner" id="ff-strip-inner"></div>
-      </div>
       <header class="ff-bar">
         <span class="ff-brand">FeedForge</span>
         <div class="ff-search-wrap">
@@ -281,7 +253,7 @@
       <div id="ff-empty" class="ff-hidden">
         <div class="ff-empty-icon"></div>
         <p>No feeds yet</p>
-        <small>Create a feed, then navigate to a LinkedIn profile — the strip above appears automatically.</small>
+        <small>Create a feed, then use the search to add people.</small>
         <button id="ff-btn-empty">Create first feed</button>
       </div>
       <footer class="ff-foot">
@@ -337,7 +309,7 @@
 
   $("ff-tab").addEventListener("click", () => setOpen(!isOpen));
 
-  // ── profile strip ─────────────────────────────────────────────────────────
+  // ── CSRF helper ──────────────────────────────────────────────────────────
   async function getCsrf() {
     // Try document.cookie first (fast, works when not httpOnly)
     const local = document.cookie.match(/JSESSIONID="([^"]+)"/)?.[1];
@@ -347,55 +319,6 @@
     return res?.token ?? null;
   }
 
-  async function loadStrip(vanity) {
-    const strip = $("ff-strip");
-    const inner = $("ff-strip-inner");
-    strip.classList.remove("ff-hidden");
-    inner.innerHTML = `<div class="ff-sav">${esc(ini(vanity))}</div>
-      <div class="ff-sinfo"><div class="ff-sname">Resolving…</div><div class="ff-ssub">${esc(vanity)}</div></div>`;
-
-    // Check cache
-    const cKey = `pfc:${vanity}`;
-    const cached = (await new Promise(r => chrome.storage.local.get(cKey, r)))[cKey];
-    if (cached?.id && Date.now() - cached.ts < 300_000) { currentMember = cached; renderStrip(); return; }
-
-    // Resolve via content.js GraphQL fetch
-    const csrf = await getCsrf();
-    if (!csrf) { inner.innerHTML = `<div class="ff-sinfo" style="width:100%"><div class="ff-sname" style="font-size:11px;opacity:.8">Not logged in to LinkedIn</div></div>`; return; }
-
-    // Resolve via multi-method fallback
-    try {
-      const result = await resolveByVanity(vanity);
-      if (result.id) {
-        currentMember = { ...result, ts: Date.now() };
-        chrome.storage.local.set({ [cKey]: currentMember });
-        renderStrip();
-      } else {
-        inner.innerHTML = `<div class="ff-sinfo" style="width:100%"><div class="ff-sname" style="font-size:11px;opacity:.8">Couldn't resolve — scroll on the profile page and try again</div></div>`;
-      }
-    } catch (e) {
-      inner.innerHTML = `<div class="ff-sinfo" style="width:100%"><div class="ff-sname" style="font-size:11px;opacity:.8">Couldn't resolve — make sure you're logged in</div></div>`;
-    }
-  }
-
-  function renderStrip() {
-    if (!currentMember) return;
-    const m = currentMember;
-    const bg = m.avatar ? `background-image:url('${esc(m.avatar)}')` : `background:rgba(255,255,255,.22)`;
-    const btns = FEEDS.slice(0,4).map(f => {
-      const has = f.members.some(x => x.id === m.id);
-      return `<button class="ff-sf${has?" ff-added":""}" data-act="strip-add" data-fid="${esc(f.id)}"
-        title="${esc(f.name)}">${has?"✓ ":""}${esc(f.name.length>10?f.name.slice(0,9)+"…":f.name)}</button>`;
-    }).join("");
-    $("ff-strip-inner").innerHTML = `
-      <div class="ff-sav" style="${bg}">${m.avatar?"":esc(ini(m.name))}</div>
-      <div class="ff-sinfo"><div class="ff-sname">${esc(m.name)}</div><div class="ff-ssub">Add to feed →</div></div>
-      <div class="ff-sfeeds">
-        ${btns}
-        ${FEEDS.length>4?`<button class="ff-sf ff-sf-new" data-act="strip-more">+${FEEDS.length-4}</button>`:""}
-        <button class="ff-sf ff-sf-new" data-act="strip-new">+ New</button>
-      </div>`;
-  }
 
   // ── feed rendering ────────────────────────────────────────────────────────
   function stackHtml(members) {
@@ -447,7 +370,6 @@
     $("ff-list").classList.toggle("ff-hidden", FEEDS.length===0);
     $("ff-list").innerHTML = vis.map(feedHtml).join("");
     $("ff-max-lbl").textContent = MAX;
-    if (currentMember) renderStrip();
   }
 
   // ── actions ───────────────────────────────────────────────────────────────
@@ -472,86 +394,6 @@
     const ids = f.members.map(m=>m.id);
     const chunks=[]; for(let i=0;i<ids.length;i+=MAX) chunks.push(ids.slice(i,i+MAX));
     window.location.href = buildUrl(chunks[idx]||chunks[0]);
-  }
-
-  // ── multi-method profile resolver ─────────────────────────────────────────
-  // LinkedIn's GraphQL queryId rotates periodically and breaks single-method resolvers.
-  // We try three approaches in order, each independent of the others.
-  async function resolveByVanity(vanity) {
-    const csrf = await getCsrf();
-    if (!csrf) return { error: "NOT_LOGGED_IN" };
-
-    // ── Method 1: GraphQL (fast, structured — may fail if queryId is stale) ──
-    try {
-      const url = `https://www.linkedin.com/voyager/api/graphql?includeWebMetadata=true` +
-        `&variables=(vanityName:${encodeURIComponent(vanity)})` +
-        `&queryId=voyagerIdentityDashProfiles.ee32334d3bd69a1900a077b5451c646a`;
-      const r = await fetch(url, {
-        credentials: "include",
-        headers: { "csrf-token": csrf, "x-restli-protocol-version": "2.0.0", "content-type": "application/json" },
-      });
-      if (r.ok) {
-        const json = await r.json();
-        const el = json?.data?.identityDashProfilesByVanityName?.elements?.[0];
-        if (el?.entityUrn) {
-          return {
-            id: el.entityUrn.split(":").pop(),
-            name: `${el.firstName||""} ${el.lastName||""}`.trim() || vanity,
-            vanity: el.publicIdentifier || vanity,
-            avatar: "",
-          };
-        }
-      }
-    } catch (_) {}
-
-    // ── Method 2: REST identity endpoint (no queryId — more stable) ──────────
-    try {
-      const r = await fetch(
-        `https://www.linkedin.com/voyager/api/identity/profiles/${encodeURIComponent(vanity)}`,
-        {
-          credentials: "include",
-          headers: { "csrf-token": csrf, "x-restli-protocol-version": "2.0.0", "accept": "application/json" },
-        }
-      );
-      if (r.ok) {
-        const json = await r.json();
-        const text = JSON.stringify(json);
-        // fsd_profile URN is what fromMember needs: urn:li:fsd_profile:ACoAA…
-        const fsd = text.match(/urn:li:fsd_profile:(ACoA[A-Za-z0-9_-]{20,})/)?.[1];
-        // fs_profile URN fallback: urn:li:fs_profile:(ACoAA…,APA,…)
-        const fs  = text.match(/urn:li:fs_profile:\(([A-Za-z0-9_-]{20,}),/)?.[1];
-        const id  = fsd || fs;
-        if (id) {
-          const inc = json.included || [];
-          const p = inc.find(x => x.firstName);
-          const name = p ? `${p.firstName} ${p.lastName||""}`.trim() : vanity;
-          return { id, name, vanity, avatar: "" };
-        }
-      }
-    } catch (_) {}
-
-    // ── Method 3: profileView endpoint (classic, different structure) ─────────
-    try {
-      const r = await fetch(
-        `https://www.linkedin.com/voyager/api/identity/profiles/${encodeURIComponent(vanity)}/profileView`,
-        {
-          credentials: "include",
-          headers: { "csrf-token": csrf, "x-restli-protocol-version": "2.0.0", "accept": "application/json" },
-        }
-      );
-      if (r.ok) {
-        const text = await r.text();
-        const id = text.match(/urn:li:fsd_profile:(ACoA[A-Za-z0-9_-]{20,})/)?.[1]
-                || text.match(/urn:li:fs_profile:\(([A-Za-z0-9_-]{20,}),/)?.[1];
-        if (id) {
-          const nameM = text.match(/"firstName":"([^"]+)".*?"lastName":"([^"]+)"/);
-          const name = nameM ? `${nameM[1]} ${nameM[2]}`.trim() : vanity;
-          return { id, name, vanity, avatar: "" };
-        }
-      }
-    } catch (_) {}
-
-    return { error: "ALL_METHODS_FAILED" };
   }
 
 
@@ -675,16 +517,6 @@
     const el = e.target.closest("[data-act]"); if (!el) return;
     const act = el.dataset.act;
 
-    if (act==="strip-add") {
-      if (!currentMember?.id) return alert("Still resolving — try again in a moment.");
-      const f=FEEDS.find(x=>x.id===el.dataset.fid); if (!f) return;
-      if (!f.members.some(m=>m.id===currentMember.id)) {
-        f.members.push({...currentMember,addedAt:Date.now()}); f.updatedAt=Date.now();
-        await setFeeds(FEEDS);
-      }
-      renderStrip(); render(); return;
-    }
-    if (act==="strip-new") { newFeed(async f=>{if(currentMember?.id){f.members.push({...currentMember,addedAt:Date.now()});await setFeeds(FEEDS);render();}}); return; }
 
     // search overlay actions
     if (act==="search-close") { closeSearch(); return; }
@@ -751,20 +583,6 @@
     if(msg?.type==="FF_TOGGLE") setOpen(!isOpen);
   });
 
-  // ── URL monitoring for profile strip (SPA navigation) ────────────────────
-  let lastPath = "";
-  function checkUrl() {
-    if (location.pathname===lastPath) return;
-    lastPath=location.pathname;
-    const m = location.pathname.match(/^\/in\/([^/?#]+)/);
-    const vanity = m ? decodeURIComponent(m[1]) : null;
-    if (vanity!==currentVanity) {
-      currentVanity=vanity; currentMember=null;
-      if (vanity) loadStrip(vanity);
-      else { $("ff-strip").classList.add("ff-hidden"); }
-    }
-  }
-  setInterval(checkUrl, 700);
 
   // ── boot ──────────────────────────────────────────────────────────────────
   (async()=>{
@@ -773,6 +591,5 @@
     isOpen = d.ff_open!==false;
     render();
     if (!isOpen) panel.classList.add("ff-min");
-    checkUrl();
   })();
 })();
