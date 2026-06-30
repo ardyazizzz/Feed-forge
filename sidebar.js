@@ -188,8 +188,8 @@
       background-size: cover; background-position: center;
     }
     .ff-av:first-child { margin-left: 0; }
-    .ff-av-wrap { position: relative; width: 100%; height: 100%; overflow: hidden; }
-    .ff-av-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
+    .ff-av-wrap { position: relative; overflow: hidden; }
+    .ff-av-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
     .ff-av-fb { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: #fff; font-weight: 700; border-radius: 50%; font-size: inherit; }
     .ff-more {
       margin-left: -7px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff;
