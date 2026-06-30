@@ -188,7 +188,7 @@
       background-size: cover; background-position: center;
     }
     .ff-av:first-child { margin-left: 0; }
-    .ff-av-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ff-av-wrap { position: relative; width: 100%; height: 100%; overflow: hidden; }
     .ff-av-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
     .ff-av-fb { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: #fff; font-weight: 700; border-radius: 50%; font-size: inherit; }
     .ff-more {
@@ -470,7 +470,7 @@
       // Real <img> so we can detect load failures. If the LinkedIn CDN URL has
       // expired, the onerror handler hides the broken image and reveals the
       // colored initials fallback.
-      return `<div class="${cls} ff-av-wrap"><img class="ff-av-img" src="${esc(m.avatar)}" alt="" referrerpolicy="no-referrer"
+      return `<div class="${cls} ff-av-wrap"><img class="ff-av-img" src="${esc(m.avatar)}" alt=""
               onerror="this.removeAttribute('onerror');this.style.display='none';var s=this.nextElementSibling;if(s)s.style.display='flex';"
               /><span class="ff-av-fb" style="background:${hue(m.name||m.id)}">${esc(ini(m.name||m.id))}</span></div>`;
     }
@@ -750,7 +750,9 @@
           const el = json?.data?.identityDashProfilesByVanityName?.elements?.[0]
                   ?? json?.data?.identityDashProfilesByMemberIdentity?.elements?.[0];
           if (!el) { failed++; continue; }
-          const newAvatar = el.profilePicture?.displayImageReferenceResolutionResult?.vectorImage?.artifacts?.[0]?.fileIdentifyingUrlPathSegment ?? "";
+          const vec = el.profilePicture?.displayImageReferenceResolutionResult?.vectorImage;
+          const newAvatar = vec?.rootUrl && vec?.artifacts?.length
+            ? vec.rootUrl + (vec.artifacts[0]?.fileIdentifyingUrlPathSegment || "") : "";
           if (newAvatar && newAvatar !== m.avatar) {
             m.avatar = newAvatar;
             updated++;
@@ -804,7 +806,7 @@
     box.innerHTML = results.map(p => {
       const inFeed = f.members.some(m => m.id === p.id);
       const av = p.avatar
-        ? `<div class="ff-sr-av ff-av-wrap"><img class="ff-av-img" src="${esc(p.avatar)}" alt="" referrerpolicy="no-referrer"
+        ? `<div class="ff-sr-av ff-av-wrap"><img class="ff-av-img" src="${esc(p.avatar)}" alt=""
               onerror="this.removeAttribute('onerror');this.style.display='none';var s=this.nextElementSibling;if(s)s.style.display='flex';"
               /><span class="ff-av-fb" style="background:${hue(p.name)}">${esc(ini(p.name))}</span></div>`
         : `<div class="ff-sr-av" style="background:${hue(p.name)};color:#fff;display:flex;align-items:center;justify-content:center">${esc(ini(p.name))}</div>`;
