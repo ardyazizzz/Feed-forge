@@ -964,10 +964,11 @@
   $("ff-import").addEventListener("click",()=>$("ff-import-file").click());
   $("ff-import-file").addEventListener("change",e=>{
     const file=e.target.files[0]; if(!file) return;
+    e.target.value="";
     const r=new FileReader(); r.onload=async()=>{
       try{const d=JSON.parse(r.result);if(!Array.isArray(d))throw 0;
         if(!FEEDS.length||confirm("Replace feeds with imported set?")){FEEDS=d;await setFeeds(FEEDS);render();}
-      }catch{alert("Invalid export file.");} e.target.value="";
+      }catch{alert("Invalid export file.");}
     }; r.readAsText(file);
   });
   $("ff-refresh-avatars").addEventListener("click", refreshAvatars);
