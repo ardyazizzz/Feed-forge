@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "FeedForge",
-  "version": "0.10.0",
-  "description": "Floating LinkedIn feed manager — minimizable drawer, no login required.",
+  "version": "0.11.0",
+  "description": "Floating LinkedIn feed manager + consistency tracker — minimizable drawer, no login required.",
   "permissions": [
     "storage",
     "tabs",

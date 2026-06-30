@@ -120,6 +120,24 @@
     }
     .ff-sr-add:hover { filter: brightness(1.1); }
     .ff-sr-add.ff-done { background: #10b981; cursor: default; }
+    .ff-so-urlsep {
+      display: flex; align-items: center; gap: 10px; margin: 0 16px 6px; flex-shrink: 0;
+      font-size: 13px; color: #c0c0cc; font-weight: 600;
+    }
+    .ff-so-urlsep::before, .ff-so-urlsep::after { content: ""; flex: 1; height: 1px; background: #ececf3; }
+    .ff-so-urlwrap { display: flex; gap: 8px; margin: 0 16px; flex-shrink: 0; }
+    #ff-so-url {
+      flex: 1; border: 1px solid #ececf3; background: #fff; border-radius: 10px;
+      padding: 10px 14px; font-size: 14px; font-family: inherit; color: #16161d; outline: none; min-width: 0;
+    }
+    #ff-so-url:focus { border-color: #4f46e5; box-shadow: 0 0 0 2px rgba(79,70,229,.09); }
+    #ff-so-url::placeholder { color: #c0c0cc; font-size: 13px; }
+    .ff-so-url-btn {
+      border: 1px solid #4f46e5; background: #fff; color: #4f46e5; cursor: pointer;
+      border-radius: 10px; padding: 10px 16px; font-size: 14px; font-weight: 650; font-family: inherit; flex-shrink: 0;
+    }
+    .ff-so-url-btn:hover { background: rgba(79,70,229,.08); }
+    .ff-so-url-btn:disabled { opacity: .45; cursor: default; }
     .ff-spin {
       display: inline-block; width: 17px; height: 17px; border: 2px solid #e0e0ea;
       border-top-color: #4f46e5; border-radius: 50%; animation: ff-spin 0.7s linear infinite;
@@ -154,7 +172,7 @@
     #ff-list { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 7px; }
     .ff-feed {
       background: #fff; border: 1px solid #ececf3; border-radius: 13px; overflow: hidden;
-      transition: box-shadow 0.13s;
+      flex-shrink: 0; transition: box-shadow 0.13s;
     }
     .ff-feed:hover { box-shadow: 0 3px 12px rgba(20,20,43,.07); }
     .ff-feed.ff-open { border-color: rgba(79,70,229,.25); box-shadow: 0 5px 18px rgba(79,70,229,.1); }
@@ -170,6 +188,9 @@
       background-size: cover; background-position: center;
     }
     .ff-av:first-child { margin-left: 0; }
+    .ff-av-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; }
+    .ff-av-img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; }
+    .ff-av-fb { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; color: #fff; font-weight: 700; border-radius: 50%; font-size: inherit; }
     .ff-more {
       margin-left: -7px; width: 26px; height: 26px; border-radius: 50%; border: 2px solid #fff;
       background: #ececf3; color: #5a5a6b; font-size: 10px; font-weight: 700;
@@ -212,7 +233,7 @@
       border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 650; color: #5a5a6b;
     }
     .ff-chunk:hover { border-color: #4f46e5; color: #4f46e5; }
-    .ff-mlist { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; max-height: 370px; overflow-y: auto; }
+    .ff-mlist { display: flex; flex-direction: column; gap: 2px; margin-top: 3px; }
     .ff-mrow { display: flex; align-items: center; gap: 9px; padding: 8px 5px; border-radius: 9px; }
     .ff-mrow:hover { background: #f4f4f9; }
     .ff-mrow .ff-av { width: 30px; height: 30px; font-size: 11px; }
@@ -240,6 +261,130 @@
     .ff-flink b { color: #16161d; }
     .ff-fsp { flex: 1; }
     .ff-hidden { display: none !important; }
+
+    /* ── tab navigation ── */
+    .ff-tabs {
+      display: flex; gap: 4px; padding: 0 14px; background: #fff;
+      border-bottom: 1px solid #ececf3; flex-shrink: 0;
+    }
+    .ff-tab-btn {
+      border: none; background: transparent; cursor: pointer; font-family: inherit;
+      font-size: 14px; font-weight: 650; color: #9494a4; padding: 12px 8px 11px;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      display: inline-flex; align-items: center; gap: 7px; transition: color 0.12s;
+    }
+    .ff-tab-btn svg { width: 16px; height: 16px; }
+    .ff-tab-btn:hover { color: #5a5a6b; }
+    .ff-tab-btn.ff-tab-active { color: #4f46e5; border-bottom-color: #4f46e5; }
+
+    /* view containers */
+    #ff-view-feeds, #ff-view-tracker { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+
+    /* ── tracker ── */
+    #ff-tracker-scroll { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 11px; }
+    .ff-tk-card { background: #fff; border: 1px solid #ececf3; border-radius: 14px; padding: 15px; }
+    .ff-tk-card.ff-tk-pad { padding: 16px; }
+
+    /* chain hero */
+    .ff-tk-hero { display: flex; align-items: center; gap: 14px; }
+    .ff-tk-flame { font-size: 34px; line-height: 1; flex-shrink: 0; }
+    .ff-tk-hero-txt { flex: 1; min-width: 0; }
+    .ff-tk-chain-n { font-size: 22px; font-weight: 800; color: #4f46e5; letter-spacing: -0.4px; }
+    .ff-tk-chain-sub { font-size: 14px; font-weight: 600; margin-top: 2px; }
+    .ff-tk-chain-sub.ff-on { color: #10b981; }
+    .ff-tk-chain-sub.ff-off { color: #9494a4; }
+    .ff-tk-shield {
+      width: 50px; height: 50px; border-radius: 14px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .ff-tk-shield.ff-on { background: rgba(16,185,129,.12); }
+    .ff-tk-shield.ff-off { background: #f4f4f9; }
+    .ff-tk-shield svg { width: 28px; height: 28px; }
+
+    /* section label */
+    .ff-tk-label { font-size: 12px; font-weight: 700; letter-spacing: 0.6px; color: #9494a4; text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 7px; }
+    .ff-tk-label svg { width: 15px; height: 15px; flex-shrink: 0; }
+    .ff-tk-label .ff-tk-info { cursor: help; color: #c0c0cc; display: inline-flex; }
+    .ff-tk-label .ff-tk-info svg { width: 15px; height: 15px; }
+
+    /* today's activity steppers */
+    .ff-tk-metrics { display: flex; gap: 9px; }
+    .ff-tk-metric { flex: 1; min-width: 0; text-align: center; }
+    .ff-tk-metric-lbl { font-size: 13px; font-weight: 600; color: #5a5a6b; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 8px; white-space: nowrap; }
+    .ff-tk-metric-lbl svg { width: 14px; height: 14px; color: #9494a4; }
+    .ff-tk-stepper {
+      display: flex; align-items: center; border: 1px solid #ececf3;
+      border-radius: 11px; overflow: hidden; background: #f7f7fb;
+    }
+    .ff-tk-step-btn {
+      border: none; background: #fff; cursor: pointer; font-family: inherit;
+      width: 34px; height: 42px; font-size: 20px; line-height: 1; color: #5a5a6b;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .ff-tk-step-btn:hover { background: #f4f4f9; color: #4f46e5; }
+    .ff-tk-step-btn:active { background: #ececf3; }
+    .ff-tk-step-val { flex: 1; text-align: center; font-size: 19px; font-weight: 750; color: #16161d; min-width: 0; }
+    .ff-tk-met .ff-tk-step-val { color: #10b981; }
+
+    /* chain visualization */
+    .ff-tk-viz-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+    .ff-tk-range {
+      border: 1px solid #ececf3; background: #f7f7fb; border-radius: 9px;
+      padding: 6px 9px; font-size: 13px; font-family: inherit; color: #16161d;
+      cursor: pointer; outline: none;
+    }
+    .ff-tk-range:focus { border-color: #4f46e5; }
+    .ff-tk-viz-sub { font-size: 12px; color: #9494a4; margin-bottom: 12px; }
+    .ff-tk-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+    .ff-tk-cell {
+      width: 19px; height: 19px; border-radius: 5px; flex-shrink: 0;
+      background: #ececf3;
+    }
+    .ff-tk-cell.ff-met { background: #10b981; }
+    .ff-tk-cell.ff-today { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #4f46e5; }
+    .ff-tk-axis { display: flex; justify-content: space-between; margin-top: 9px; font-size: 11px; color: #9494a4; }
+    .ff-tk-streaks { display: flex; justify-content: space-between; margin-top: 14px; padding-top: 13px; border-top: 1px solid #f4f4f9; }
+    .ff-tk-streak { display: flex; align-items: center; gap: 7px; font-size: 14px; color: #5a5a6b; }
+    .ff-tk-streak b { color: #16161d; font-weight: 750; }
+
+    /* comparison */
+    .ff-tk-cmp-grid { display: flex; flex-direction: column; gap: 11px; }
+    .ff-tk-cmp { background: #f7f7fb; border: 1px solid #ececf3; border-radius: 12px; padding: 13px; }
+    .ff-tk-cmp-head { display: flex; align-items: center; gap: 7px; font-size: 14px; font-weight: 700; color: #4f46e5; margin-bottom: 10px; }
+    .ff-tk-cmp-head svg { width: 15px; height: 15px; }
+    .ff-tk-cmp-row { display: flex; align-items: center; font-size: 13px; padding: 4px 0; }
+    .ff-tk-cmp-name { color: #5a5a6b; flex: 1; }
+    .ff-tk-cmp-now { font-weight: 750; color: #16161d; width: 34px; text-align: right; }
+    .ff-tk-cmp-vs { color: #9494a4; width: 56px; text-align: right; font-size: 12px; }
+    .ff-tk-cmp-delta { width: 64px; text-align: right; font-weight: 700; display: inline-flex; align-items: center; justify-content: flex-end; gap: 2px; }
+    .ff-tk-cmp-delta.ff-up { color: #10b981; }
+    .ff-tk-cmp-delta.ff-down { color: #e5484d; }
+    .ff-tk-cmp-delta.ff-flat { color: #9494a4; }
+
+    /* goals editor */
+    .ff-tk-goals { display: flex; flex-direction: column; gap: 10px; }
+    .ff-tk-goal-row { display: flex; align-items: center; gap: 10px; }
+    .ff-tk-goal-lbl { flex: 1; font-size: 14px; font-weight: 600; color: #16161d; display: flex; align-items: center; gap: 7px; }
+    .ff-tk-goal-lbl svg { width: 15px; height: 15px; color: #9494a4; }
+    .ff-tk-goal-stepper { display: flex; align-items: center; border: 1px solid #ececf3; border-radius: 9px; overflow: hidden; }
+    .ff-tk-goal-stepper button {
+      border: none; background: #fff; cursor: pointer; font-family: inherit;
+      width: 30px; height: 34px; font-size: 17px; color: #5a5a6b;
+    }
+    .ff-tk-goal-stepper button:hover { background: #f4f4f9; color: #4f46e5; }
+    .ff-tk-goal-val { width: 38px; text-align: center; font-size: 15px; font-weight: 700; color: #16161d; }
+    .ff-tk-goal-hint { font-size: 12px; color: #9494a4; line-height: 1.5; margin-top: 4px; }
+
+    /* footer buttons row inside tracker */
+    .ff-tk-foot { display: flex; gap: 9px; }
+    .ff-tk-foot-btn {
+      flex: 1; border: 1px solid #ececf3; background: #fff; border-radius: 12px;
+      padding: 13px; cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 650;
+      color: #4f46e5; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .ff-tk-foot-btn svg { width: 17px; height: 17px; }
+    .ff-tk-foot-btn:hover { background: #f7f7fb; border-color: rgba(79,70,229,.3); }
   `;
   shadow.appendChild(styleEl);
 
@@ -253,26 +398,47 @@
     <div id="ff-main">
       <header class="ff-bar">
         <span class="ff-brand">FeedForge</span>
-        <div class="ff-search-wrap">
+        <div class="ff-search-wrap" id="ff-feeds-searchwrap">
           <svg class="ff-search-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
           <input id="ff-q" type="text" placeholder="Search feeds…" autocomplete="off"/>
         </div>
         <button id="ff-btn-new">+ Feed</button>
       </header>
-      <div id="ff-list"></div>
-      <div id="ff-empty" class="ff-hidden">
-        <div class="ff-empty-icon"></div>
-        <p>No feeds yet</p>
-        <small>Create a feed, then use the search to add people.</small>
-        <button id="ff-btn-empty">Create first feed</button>
+      <nav class="ff-tabs">
+        <button class="ff-tab-btn ff-tab-active" id="ff-nav-feeds" data-act="nav" data-view="feeds">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Feeds
+        </button>
+        <button class="ff-tab-btn" id="ff-nav-tracker" data-act="nav" data-view="tracker">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+          Tracker
+        </button>
+      </nav>
+
+      <!-- ───── FEEDS VIEW ───── -->
+      <div id="ff-view-feeds">
+        <div id="ff-list"></div>
+        <div id="ff-empty" class="ff-hidden">
+          <div class="ff-empty-icon"></div>
+          <p>No feeds yet</p>
+          <small>Create a feed, then use the search to add people.</small>
+          <button id="ff-btn-empty">Create first feed</button>
+        </div>
+        <footer class="ff-foot">
+          <button class="ff-flink" id="ff-export">Export</button>
+          <button class="ff-flink" id="ff-import">Import</button>
+          <input id="ff-import-file" type="file" accept="application/json" style="display:none"/>
+          <span class="ff-fsp"></span>
+          <button class="ff-flink" id="ff-max-btn">Max: <b id="ff-max-lbl">28</b></button>
+          <button class="ff-flink" id="ff-refresh-avatars" title="Re-fetch profile pictures that may have expired">Refresh pics</button>
+        </footer>
       </div>
-      <footer class="ff-foot">
-        <button class="ff-flink" id="ff-export">Export</button>
-        <button class="ff-flink" id="ff-import">Import</button>
-        <input id="ff-import-file" type="file" accept="application/json" style="display:none"/>
-        <span class="ff-fsp"></span>
-        <button class="ff-flink" id="ff-max-btn">Max: <b id="ff-max-lbl">28</b></button>
-      </footer>
+
+      <!-- ───── TRACKER VIEW ───── -->
+      <div id="ff-view-tracker" class="ff-hidden">
+        <div id="ff-tracker-scroll"></div>
+      </div>
+
       <div id="ff-search-overlay" class="ff-hidden">
         <div class="ff-so-head">
           <button class="ff-so-back" data-act="search-close">←</button>
@@ -280,8 +446,14 @@
         </div>
         <div class="ff-so-searchbar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-          <input id="ff-so-input" type="text" placeholder="Search people by name…" autocomplete="off"/>
+          <input id="ff-so-input" type="text" placeholder="Search by name (add company/title to narrow)…" autocomplete="off"/>
         </div>
+        <div class="ff-so-urlsep">or paste profile URL</div>
+        <div class="ff-so-urlwrap">
+          <input id="ff-so-url" type="text" placeholder="https://www.linkedin.com/in/…" autocomplete="off"/>
+          <button class="ff-so-url-btn" id="ff-so-url-btn" data-act="url-add">Add</button>
+        </div>
+        <div class="ff-sr-msg ff-hidden" id="ff-so-url-msg" style="margin:4px 16px 0;padding:7px 14px;font-size:13px;text-align:left;color:#5a5a6b;"></div>
         <div id="ff-so-results"></div>
       </div>
     </div>
@@ -294,8 +466,15 @@
   const ini = n  => (n||"?").split(/\s+/).slice(0,2).map(w=>w[0]?.toUpperCase()||"").join("")||"?";
   const hue = s  => { let h=0; for(const c of s||"") h=(h*31+c.charCodeAt(0))%360; return `hsl(${h} 52% 55%)`; };
   const avEl = (m,cls) => {
-    const bg = m.avatar ? `background-image:url('${esc(m.avatar)}')` : `background:${hue(m.name||m.id)}`;
-    return `<div class="${cls}" style="${bg}">${m.avatar?"":esc(ini(m.name||m.id))}</div>`;
+    if (m.avatar) {
+      // Real <img> so we can detect load failures. If the LinkedIn CDN URL has
+      // expired, the onerror handler hides the broken image and reveals the
+      // colored initials fallback.
+      return `<div class="${cls} ff-av-wrap"><img class="ff-av-img" src="${esc(m.avatar)}" alt="" referrerpolicy="no-referrer"
+              onerror="this.removeAttribute('onerror');this.style.display='none';var s=this.nextElementSibling;if(s)s.style.display='flex';"
+              /><span class="ff-av-fb" style="background:${hue(m.name||m.id)}">${esc(ini(m.name||m.id))}</span></div>`;
+    }
+    return `<div class="${cls}" style="background:${hue(m.name||m.id)};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700">${esc(ini(m.name||m.id))}</div>`;
   };
   const IC = {
     open:   `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M9 7h8v8"/></svg>`,
@@ -465,6 +644,136 @@
     }
   }
 
+  // ── add by LinkedIn profile URL ──────────────────────────────────────────
+  async function addByUrl() {
+    const raw = $("ff-so-url").value.trim();
+    if (!raw) return;
+    const vanity = (raw.match(/\/in\/([^/?#]+)/)?.[1] || raw).replace(/[<>{}]/g, "").slice(0, 100);
+    if (!vanity) return;
+
+    const btn = $("ff-so-url-btn");
+    btn.disabled = true;
+    btn.textContent = "…";
+
+    try {
+      const csrf = await getCsrf();
+      if (!csrf) { showUrlMsg("Log in to LinkedIn first."); return; }
+
+      const url = `https://www.linkedin.com/voyager/api/graphql?includeWebMetadata=true&variables=(vanityName:${encodeURIComponent(vanity)})&queryId=voyagerIdentityDashProfiles.ee32334d3bd69a1900a077b5451c646a`;
+      const r = await fetch(url, {
+        method: "GET", credentials: "include",
+        headers: { "csrf-token": csrf, "x-restli-protocol-version": "2.0.0", "content-type": "application/json" },
+      });
+      if (!r.ok) { showUrlMsg(r.status === 429 ? "LinkedIn rate-limited." : `LinkedIn error ${r.status}.`); return; }
+
+      const json = await r.json();
+      const el = json?.data?.identityDashProfilesByVanityName?.elements?.[0] ?? json?.data?.identityDashProfilesByMemberIdentity?.elements?.[0];
+      if (!el) { showUrlMsg("Profile not found. Check the URL."); return; }
+
+      const member = {
+        id: el.entityUrn?.split(":").pop() ?? "",
+        name: `${el.firstName ?? ""} ${el.lastName ?? ""}`.trim() || vanity,
+        vanity: el.publicIdentifier ?? vanity,
+        avatar: el.profilePicture?.displayImageReferenceResolutionResult?.vectorImage?.artifacts?.[0]?.fileIdentifyingUrlPathSegment ?? "",
+      };
+      if (!member.id) { showUrlMsg("Could not resolve profile ID."); return; }
+
+      const f = FEEDS.find(x => x.id === searchFeedId);
+      if (!f) { showUrlMsg("No feed selected."); return; }
+      if (f.members.some(m => m.id === member.id)) { showUrlMsg("Already in this feed."); return; }
+
+      f.members.push({ ...member, addedAt: Date.now() });
+      f.updatedAt = Date.now();
+      await setFeeds(FEEDS);
+      $("ff-so-url").value = "";
+      showUrlMsg(`Added ${member.name} ✓`);
+      render();
+    } catch (_) {
+      showUrlMsg("Network error — try again.");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Add";
+    }
+  }
+
+  function showUrlMsg(msg) {
+    const el = $("ff-so-url-msg");
+    if (el) { el.textContent = msg; el.classList.remove("ff-hidden"); setTimeout(() => el.classList.add("ff-hidden"), 3000); }
+  }
+
+  // ── refresh expired avatars ────────────────────────────────────────────────
+  // LinkedIn's voyager avatar URLs are session-signed and can expire, leaving
+  // empty circles. This function re-resolves every member whose avatar is
+  // missing or whose current URL fails a HEAD/GET probe, then updates storage.
+  // Runs only when the user clicks "Refresh pics" — no background work.
+  async function refreshAvatars() {
+    const btn = $("ff-refresh-avatars");
+    if (!btn || btn.disabled) return;
+
+    // Collect unique members across all feeds (dedup by id).
+    const seen = new Set();
+    const targets = [];
+    for (const f of FEEDS) {
+      for (const m of (f.members || [])) {
+        if (m && m.id && m.vanity && !seen.has(m.id)) {
+          seen.add(m.id);
+          targets.push(m);
+        }
+      }
+    }
+    if (!targets.length) { showUrlMsg("No members to refresh."); return; }
+
+    const csrf = await getCsrf();
+    if (!csrf) { showUrlMsg("Log in to LinkedIn first."); return; }
+
+    btn.disabled = true;
+    const originalLabel = btn.textContent;
+    btn.textContent = "Refreshing…";
+
+    let updated = 0, failed = 0;
+    // Sequential with a small delay between requests to stay under LinkedIn's
+    // rate limit. Up to 6 in flight to keep the UI responsive.
+    const concurrency = 6;
+    let cursor = 0;
+    const worker = async () => {
+      while (cursor < targets.length) {
+        const i = cursor++;
+        const m = targets[i];
+        try {
+          const url = `https://www.linkedin.com/voyager/api/graphql?includeWebMetadata=true&variables=(vanityName:${encodeURIComponent(m.vanity)})&queryId=voyagerIdentityDashProfiles.ee32334d3bd69a1900a077b5451c646a`;
+          const r = await fetch(url, {
+            method: "GET", credentials: "include",
+            headers: { "csrf-token": csrf, "x-restli-protocol-version": "2.0.0", "content-type": "application/json" },
+          });
+          if (!r.ok) { failed++; continue; }
+          const json = await r.json();
+          const el = json?.data?.identityDashProfilesByVanityName?.elements?.[0]
+                  ?? json?.data?.identityDashProfilesByMemberIdentity?.elements?.[0];
+          if (!el) { failed++; continue; }
+          const newAvatar = el.profilePicture?.displayImageReferenceResolutionResult?.vectorImage?.artifacts?.[0]?.fileIdentifyingUrlPathSegment ?? "";
+          if (newAvatar && newAvatar !== m.avatar) {
+            m.avatar = newAvatar;
+            updated++;
+          }
+        } catch (_) {
+          failed++;
+        }
+        // Small breather between requests per worker
+        await new Promise(r => setTimeout(r, 80));
+      }
+    };
+    await Promise.all(Array.from({ length: Math.min(concurrency, targets.length) }, worker));
+
+    if (updated > 0) await setFeeds(FEEDS);
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+    render();
+    showUrlMsg(updated > 0
+      ? `Refreshed ${updated} avatar${updated === 1 ? "" : "s"}${failed > 0 ? ` (${failed} failed)` : ""} ✓`
+      : failed > 0 ? `Refresh failed for ${failed} profile${failed === 1 ? "" : "s"}.`
+      : `All avatars already up to date.`);
+  }
+
   // ── search overlay ─────────────────────────────────────────────────────────
   let searchFeedId = null;
   let searchTimer = null;
@@ -475,6 +784,9 @@
     searchFeedId = feedId;
     $("ff-so-title").textContent = `Add to "${f.name}"`;
     $("ff-so-input").value = "";
+    $("ff-so-url").value = "";
+    const msg = $("ff-so-url-msg");
+    if (msg) { msg.classList.add("ff-hidden"); }
     $("ff-so-results").innerHTML = `<div class="ff-sr-msg">Type a name to search LinkedIn…</div>`;
     $("ff-search-overlay").classList.remove("ff-hidden");
     setTimeout(() => $("ff-so-input").focus(), 50);
@@ -491,11 +803,15 @@
     if (!results.length) { box.innerHTML = `<div class="ff-sr-msg">No people found.</div>`; return; }
     box.innerHTML = results.map(p => {
       const inFeed = f.members.some(m => m.id === p.id);
-      const bg = p.avatar ? `background-image:url('${esc(p.avatar)}')` : `background:${hue(p.name)}`;
+      const av = p.avatar
+        ? `<div class="ff-sr-av ff-av-wrap"><img class="ff-av-img" src="${esc(p.avatar)}" alt="" referrerpolicy="no-referrer"
+              onerror="this.removeAttribute('onerror');this.style.display='none';var s=this.nextElementSibling;if(s)s.style.display='flex';"
+              /><span class="ff-av-fb" style="background:${hue(p.name)}">${esc(ini(p.name))}</span></div>`
+        : `<div class="ff-sr-av" style="background:${hue(p.name)};color:#fff;display:flex;align-items:center;justify-content:center">${esc(ini(p.name))}</div>`;
       return `
         <div class="ff-sr-item" data-act="sr-add" data-id="${esc(p.id)}"
              data-name="${esc(p.name)}" data-vanity="${esc(p.vanity)}" data-avatar="${esc(p.avatar)}">
-          <div class="ff-sr-av" style="${bg}">${p.avatar?"":esc(ini(p.name))}</div>
+          ${av}
           <div class="ff-sr-info">
             <div class="ff-sr-name">${esc(p.name)}${p.degree?`<span class="ff-sr-deg">${esc(p.degree)}</span>`:""}</div>
             <div class="ff-sr-head">${esc(p.headline)}</div>
@@ -530,9 +846,17 @@
     const el = e.target.closest("[data-act]"); if (!el) return;
     const act = el.dataset.act;
 
+    // tab navigation
+    if (act === "nav") { switchView(el.dataset.view); return; }
+
+    // tracker actions
+    if (act === "tk-bump") { tkBump(el.dataset.m, Number(el.dataset.d)); return; }
+    if (act === "tk-goal") { tkGoal(el.dataset.m, Number(el.dataset.d)); return; }
+
 
     // search overlay actions
     if (act==="search-close") { closeSearch(); return; }
+    if (act==="url-add") { addByUrl(); return; }
     if (act==="sr-add") {
       const f = FEEDS.find(x => x.id === searchFeedId);
       if (!f) return;
@@ -562,7 +886,15 @@
   });
 
   $("ff-q").addEventListener("input", e=>{search=e.target.value;render();});
+
+  // tracker range selector (select fires 'change', not click)
+  shadow.addEventListener("change", e => {
+    const sel = e.target.closest('[data-act="tk-range"]');
+    if (sel) tkSetRange(Number(sel.value));
+  });
+
   $("ff-so-input").addEventListener("input", onSearchInput);
+  $("ff-so-url").addEventListener("keydown", e => { if (e.key === "Enter") addByUrl(); });
   $("ff-btn-new").addEventListener("click", ()=>newFeed(f=>{openId=f.id;render();}));
   $("ff-btn-empty").addEventListener("click", ()=>newFeed(f=>{openId=f.id;render();}));
 
@@ -636,12 +968,20 @@
       }catch{alert("Invalid export file.");} e.target.value="";
     }; r.readAsText(file);
   });
+  $("ff-refresh-avatars").addEventListener("click", refreshAvatars);
 
   // ── live sync (content.js post buttons write to same storage) ─────────────
   chrome.storage.onChanged.addListener((ch,area)=>{
     if(area!=="local") return;
     if(ch.feeds){FEEDS=ch.feeds.newValue||[];render();}
     if(ch.maxPerFeed){MAX=ch.maxPerFeed.newValue||28;render();}
+    if(ch[TK_KEY] && ch[TK_KEY].newValue){
+      const nv = ch[TK_KEY].newValue;
+      TK.goals = { ...TK.goals, ...(nv.goals||{}) };
+      TK.days = nv.days || {};
+      TK.range = nv.range || TK.range;
+      if (currentView === "tracker") renderTracker();
+    }
   });
 
   // ── toggle from toolbar icon (via background.js) ──────────────────────────
@@ -650,12 +990,301 @@
   });
 
 
+  // ════════════════════════════════════════════════════════════════════════
+  //  CONSISTENCY TRACKER
+  //  Same drawer, complementary purpose: Feeds = who you engage, Tracker =
+  //  how consistently. State lives under tracker:* keys, never touches `feeds`.
+  // ════════════════════════════════════════════════════════════════════════
+
+  // metric definitions — order matters for layout
+  const TK_METRICS = [
+    { key: "posts",       label: "Posts",             icon: "pen"     },
+    { key: "comments",    label: "Comments",          icon: "comment" },
+    { key: "connections", label: "Connections / DMs", icon: "send"    },
+  ];
+
+  // tracker icons (kept geometric, matching existing IC set)
+  const TKIC = {
+    pen:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.1 2.1 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>`,
+    comment: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>`,
+    send:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>`,
+    shieldOn:`<svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>`,
+    shieldOff:`<svg viewBox="0 0 24 24" fill="none" stroke="#9494a4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    clock:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>`,
+    cal:     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>`,
+    bars:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="20" x2="6" y2="13"/><line x1="12" y1="20" x2="12" y2="8"/><line x1="18" y1="20" x2="18" y2="4"/></svg>`,
+    target:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/></svg>`,
+    info:    `<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
+    flame:   `🔥`, star: `⭐`, leaf: `🌱`,
+  };
+
+  // tracker state
+  let TK = {
+    goals: { posts: 1, comments: 5, connections: 3 },
+    days: {},          // { "YYYY-MM-DD": { posts, comments, connections } }
+    range: 30,         // chain viz window
+  };
+
+  const TK_KEY = "tracker_state";
+
+  const getTracker = () => new Promise(r =>
+    chrome.storage.local.get({ [TK_KEY]: null }, d => r(d[TK_KEY])));
+  const setTracker = () => new Promise(r =>
+    chrome.storage.local.set({ [TK_KEY]: TK }, r));
+
+  // local date key (avoids UTC off-by-one)
+  function dayKey(d = new Date()) {
+    return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  }
+  function dateFromKey(k) { const [y,m,d] = k.split("-").map(Number); return new Date(y, m-1, d); }
+  function shiftDay(d, n) { const x = new Date(d); x.setDate(x.getDate()+n); return x; }
+
+  function todayCounts() {
+    return TK.days[dayKey()] || { posts: 0, comments: 0, connections: 0 };
+  }
+
+  // a day "counts" (chain stays alive) when every goal with target>0 is met.
+  function dayMet(counts) {
+    if (!counts) return false;
+    const active = TK_METRICS.filter(m => (TK.goals[m.key] || 0) > 0);
+    if (!active.length) return false; // no goals set → nothing to meet
+    return active.every(m => (counts[m.key] || 0) >= TK.goals[m.key]);
+  }
+
+  // walk backwards from today counting consecutive met days
+  function currentStreak() {
+    let n = 0, cur = new Date();
+    // today only counts if met; otherwise streak is yesterday-anchored
+    if (!dayMet(TK.days[dayKey(cur)])) cur = shiftDay(cur, -1);
+    for (;;) {
+      const k = dayKey(cur);
+      if (dayMet(TK.days[k])) { n++; cur = shiftDay(cur, -1); } else break;
+    }
+    return n;
+  }
+  function longestStreak() {
+    const keys = Object.keys(TK.days).filter(k => dayMet(TK.days[k])).sort();
+    if (!keys.length) return 0;
+    let best = 1, run = 1;
+    for (let i = 1; i < keys.length; i++) {
+      const prev = dateFromKey(keys[i-1]), cur = dateFromKey(keys[i]);
+      const diff = Math.round((cur - prev) / 86400000);
+      run = diff === 1 ? run + 1 : 1;
+      if (run > best) best = run;
+    }
+    return Math.max(best, currentStreak());
+  }
+
+  // averages over the trailing N days (excluding today), for comparison card
+  function trailingAvg(metricKey, days) {
+    let sum = 0, count = 0;
+    for (let i = 1; i <= days; i++) {
+      const k = dayKey(shiftDay(new Date(), -i));
+      sum += (TK.days[k]?.[metricKey] || 0); count++;
+    }
+    return count ? sum / count : 0;
+  }
+  function yesterdayCount(metricKey) {
+    return TK.days[dayKey(shiftDay(new Date(), -1))]?.[metricKey] || 0;
+  }
+
+  function deltaHtml(now, base) {
+    if (base === 0) {
+      if (now === 0) return `<span class="ff-tk-cmp-delta ff-flat">—</span>`;
+      return `<span class="ff-tk-cmp-delta ff-up">▲ new</span>`;
+    }
+    const pct = Math.round(((now - base) / base) * 100);
+    if (pct === 0) return `<span class="ff-tk-cmp-delta ff-flat">▬ 0%</span>`;
+    const cls = pct > 0 ? "ff-up" : "ff-down";
+    const arr = pct > 0 ? "▲" : "▼";
+    return `<span class="ff-tk-cmp-delta ${cls}">${arr} ${pct > 0 ? "+" : ""}${pct}%</span>`;
+  }
+
+  function fmtAvg(n) { return Number.isInteger(n) ? String(n) : n.toFixed(1); }
+
+  // ── tracker mutations ───────────────────────────────────────────────────
+  async function tkBump(metricKey, delta) {
+    const k = dayKey();
+    if (!TK.days[k]) TK.days[k] = { posts: 0, comments: 0, connections: 0 };
+    TK.days[k][metricKey] = Math.max(0, (TK.days[k][metricKey] || 0) + delta);
+    await setTracker();
+    renderTracker();
+  }
+  async function tkGoal(metricKey, delta) {
+    TK.goals[metricKey] = Math.max(0, (TK.goals[metricKey] || 0) + delta);
+    await setTracker();
+    renderTracker();
+  }
+  async function tkSetRange(n) { TK.range = n; await setTracker(); renderTracker(); }
+
+  // ── tracker rendering ─────────────────────────────────────────────────────
+  function renderChainViz() {
+    const cells = [];
+    const total = TK.range;
+    for (let i = total - 1; i >= 0; i--) {
+      const d = shiftDay(new Date(), -i);
+      const k = dayKey(d);
+      const met = dayMet(TK.days[k]);
+      const isToday = i === 0;
+      cells.push(`<div class="ff-tk-cell ${met ? "ff-met" : ""} ${isToday ? "ff-today" : ""}" title="${k}"></div>`);
+    }
+    const startD = shiftDay(new Date(), -(total - 1));
+    const midD = shiftDay(new Date(), -Math.floor(total / 2));
+    const fmt = d => d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    return `
+      <div class="ff-tk-grid">${cells.join("")}</div>
+      <div class="ff-tk-axis"><span>${fmt(startD)}</span><span>${fmt(midD)}</span><span>Today</span></div>`;
+  }
+
+  function renderComparison() {
+    const today = todayCounts();
+    const cmp = (title, icon, baseFn, baseFmt) => `
+      <div class="ff-tk-cmp">
+        <div class="ff-tk-cmp-head">${TKIC[icon]} ${title}</div>
+        ${TK_METRICS.map(m => {
+          const now = today[m.key] || 0;
+          const base = baseFn(m.key);
+          return `<div class="ff-tk-cmp-row">
+            <span class="ff-tk-cmp-name">${m.label}</span>
+            <span class="ff-tk-cmp-now">${now}</span>
+            <span class="ff-tk-cmp-vs">vs ${baseFmt(base)}</span>
+            ${deltaHtml(now, base)}
+          </div>`;
+        }).join("")}
+      </div>`;
+    return `
+      <div class="ff-tk-cmp-grid">
+        ${cmp("vs Yesterday", "clock", yesterdayCount, v => v)}
+        ${cmp("vs 7-Day Average", "cal", k => trailingAvg(k, 7), fmtAvg)}
+      </div>`;
+  }
+
+  function renderTracker() {
+    const scroll = $("ff-tracker-scroll");
+    if (!scroll) return;
+    const today = todayCounts();
+    const streak = currentStreak();
+    const longest = longestStreak();
+    const metToday = dayMet(today);
+    const goalsSet = TK_METRICS.some(m => (TK.goals[m.key] || 0) > 0);
+
+    scroll.innerHTML = `
+      <!-- chain hero -->
+      <div class="ff-tk-card ff-tk-pad">
+        <div class="ff-tk-hero">
+          <span class="ff-tk-flame">${streak > 0 ? TKIC.flame : TKIC.leaf}</span>
+          <div class="ff-tk-hero-txt">
+            <div class="ff-tk-chain-n">${streak} Day Chain</div>
+            <div class="ff-tk-chain-sub ${metToday ? "ff-on" : "ff-off"}">
+              ${metToday ? "Today's target completed! 🎉"
+                : goalsSet ? "Hit your targets to extend the chain"
+                : "Set goals below to start your chain"}
+            </div>
+          </div>
+          <div class="ff-tk-shield ${metToday ? "ff-on" : "ff-off"}">
+            ${metToday ? TKIC.shieldOn : TKIC.shieldOff}
+          </div>
+        </div>
+      </div>
+
+      <!-- today's activity -->
+      <div class="ff-tk-card">
+        <div class="ff-tk-label">Today's Activity</div>
+        <div class="ff-tk-metrics">
+          ${TK_METRICS.map(m => {
+            const v = today[m.key] || 0;
+            const goal = TK.goals[m.key] || 0;
+            const met = goal > 0 && v >= goal;
+            return `
+              <div class="ff-tk-metric">
+                <div class="ff-tk-metric-lbl">${TKIC[m.icon]} ${m.label}</div>
+                <div class="ff-tk-stepper ${met ? "ff-tk-met" : ""}">
+                  <button class="ff-tk-step-btn" data-act="tk-bump" data-m="${m.key}" data-d="-1">−</button>
+                  <span class="ff-tk-step-val">${v}</span>
+                  <button class="ff-tk-step-btn" data-act="tk-bump" data-m="${m.key}" data-d="1">+</button>
+                </div>
+              </div>`;
+          }).join("")}
+        </div>
+      </div>
+
+      <!-- chain visualization -->
+      <div class="ff-tk-card">
+        <div class="ff-tk-viz-head">
+          <div class="ff-tk-label" style="margin-bottom:0"><span class="ff-tk-info" title="Each block is a day. Green = all active targets met.">${TKIC.bars}</span> Chain Visualization</div>
+          <select class="ff-tk-range" data-act="tk-range">
+            <option value="14" ${TK.range===14?"selected":""}>Last 14 Days</option>
+            <option value="30" ${TK.range===30?"selected":""}>Last 30 Days</option>
+            <option value="60" ${TK.range===60?"selected":""}>Last 60 Days</option>
+            <option value="90" ${TK.range===90?"selected":""}>Last 90 Days</option>
+          </select>
+        </div>
+        <div class="ff-tk-viz-sub">Each block is a day. Green = target met · Gray = missed</div>
+        ${renderChainViz()}
+        <div class="ff-tk-streaks">
+          <span class="ff-tk-streak">${TKIC.flame} Current Streak: <b>${streak} days</b></span>
+          <span class="ff-tk-streak">${TKIC.star} Longest: <b>${longest} days</b></span>
+        </div>
+      </div>
+
+      <!-- comparison -->
+      <div class="ff-tk-card">
+        <div class="ff-tk-label">Comparison</div>
+        ${renderComparison()}
+      </div>
+
+      <!-- goals (the requirement bar) -->
+      <div class="ff-tk-card">
+        <div class="ff-tk-label">${TKIC.target} Daily Goals</div>
+        <div class="ff-tk-goals">
+          ${TK_METRICS.map(m => `
+            <div class="ff-tk-goal-row">
+              <span class="ff-tk-goal-lbl">${TKIC[m.icon]} ${m.label}</span>
+              <div class="ff-tk-goal-stepper">
+                <button data-act="tk-goal" data-m="${m.key}" data-d="-1">−</button>
+                <span class="ff-tk-goal-val">${TK.goals[m.key] || 0}</span>
+                <button data-act="tk-goal" data-m="${m.key}" data-d="1">+</button>
+              </div>
+            </div>`).join("")}
+        </div>
+        <div class="ff-tk-goal-hint">A day joins your chain only when every goal above (with a target greater than 0) is met. Set a goal to 0 to ignore that metric.</div>
+      </div>
+    `;
+  }
+
+  // ── tab switching ───────────────────────────────────────────────────────
+  let currentView = "feeds";
+  function switchView(view) {
+    currentView = view;
+    const feeds = view === "feeds";
+    $("ff-view-feeds").classList.toggle("ff-hidden", !feeds);
+    $("ff-view-tracker").classList.toggle("ff-hidden", feeds);
+    $("ff-feeds-searchwrap").classList.toggle("ff-hidden", !feeds);
+    $("ff-btn-new").classList.toggle("ff-hidden", !feeds);
+    $("ff-nav-feeds").classList.toggle("ff-tab-active", feeds);
+    $("ff-nav-tracker").classList.toggle("ff-tab-active", !feeds);
+    if (!feeds) renderTracker();
+    chrome.storage.local.set({ ff_view: view });
+  }
+
   // ── boot ──────────────────────────────────────────────────────────────────
   (async()=>{
-    const d = await new Promise(r=>chrome.storage.local.get({feeds:[],maxPerFeed:28,ff_open:true},r));
+    const d = await new Promise(r=>chrome.storage.local.get({feeds:[],maxPerFeed:28,ff_open:true,ff_view:"feeds"},r));
     FEEDS=d.feeds||[]; MAX=d.maxPerFeed||28;
     isOpen = d.ff_open!==false;
+
+    // load tracker state (merge so new metric keys/defaults survive upgrades)
+    const saved = await getTracker();
+    if (saved) {
+      TK.goals = { ...TK.goals, ...(saved.goals || {}) };
+      TK.days  = saved.days || {};
+      TK.range = saved.range || 30;
+    } else {
+      await setTracker(); // seed defaults on first run
+    }
+
     render();
+    if (d.ff_view === "tracker") switchView("tracker");
     if (!isOpen) panel.classList.add("ff-min");
   })();
 })();
